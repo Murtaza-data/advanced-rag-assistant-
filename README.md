@@ -2,8 +2,7 @@
 
 A Document Q&A web application built with Retrieval Augmented Generation (RAG).
 
-**🔗 Live Demo:** [Try the app here](https://share.streamlit.io)
-
+**🔗 Live Demo:** [Try the app here](https://gen-ai-fundamentals-idimrtrqf7w7inmpbufydx.streamlit.app/)
 ## What It Does
 
 Upload any PDF and ask questions about it in natural language. The app finds relevant information from your document and generates accurate answers using AI.
