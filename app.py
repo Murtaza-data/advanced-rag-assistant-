@@ -228,13 +228,22 @@ if uploaded_file and groq_api_key:
                 "question": question
             })
 
-        st.markdown("### 📝 Answer")
+               st.markdown("### 📝 Answer")
         st.markdown(f"> {response.content}")
+
+        # Show source pages the answer came from
+        source_pages = sorted(set(
+            doc.metadata.get("page", 0) + 1 for doc in retrieved_docs
+        ))
+        pages_text = ", ".join(str(p) for p in source_pages)
+        st.caption(f"📌 Sources: Page {pages_text}")
+
         st.markdown("---")
 
-        with st.expander("🔍 View retrieved document chunks"):
+         with st.expander("🔍 View retrieved document chunks"):
             for i, doc in enumerate(retrieved_docs):
-                st.markdown(f"**Chunk {i+1}:**")
+                page_num = doc.metadata.get("page", 0) + 1
+                st.markdown(f"**Chunk {i+1}** — 📄 Page {page_num}:")
                 st.write(doc.page_content)
                 st.markdown("---")
 
