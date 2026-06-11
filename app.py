@@ -228,7 +228,7 @@ if uploaded_file and groq_api_key:
                 "question": question
             })
 
-               st.markdown("### 📝 Answer")
+        st.markdown("### 📝 Answer")
         st.markdown(f"> {response.content}")
 
         # Show source pages the answer came from
