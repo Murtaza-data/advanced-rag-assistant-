@@ -11,3 +11,4 @@ protobuf==3.20.3
 networkx
 sentence-transformers
 pypdf
+rank_bm25
