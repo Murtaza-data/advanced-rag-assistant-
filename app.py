@@ -48,7 +48,7 @@ version = st.sidebar.radio(
 if "v1" in version:
     st.sidebar.info("**v1 Basic RAG:** ChromaDB semantic search only. Finds chunks by meaning similarity.")
 elif "v2" in version:
-    st.sidebar.info("**v2 Hybrid Search:** ChromaDB + BM25 combined. Finds chunks by both meaning AND exact keywords.")
+    st.sidebar.info("**v2 Hybrid Search:** ChromaDB + keyword search combined. Finds chunks by both meaning AND exact keywords.")
 else:
     st.sidebar.info("**v3 GraphRAG:** Extracts entities and relationships. Understands connections between concepts.")
 
@@ -58,7 +58,7 @@ st.sidebar.markdown("""
 **Tech Stack:**
 - 🦙 LLaMA 3.3-70b (Groq)
 - 🔗 Langchain
-- 🗄️ ChromaDB / BM25 / GraphRAG
+- 🗄️ ChromaDB / Keyword / GraphRAG
 - 🤗 HuggingFace Embeddings
 """)
 
@@ -150,7 +150,6 @@ if uploaded_file and groq_api_key:
                 context = "\n".join([doc.page_content for doc in retrieved_docs])
 
             # ── v2: Hybrid search ──────────────────────
-                     
             elif "v2" in version:
                 # ChromaDB semantic search
                 chroma_docs = vectorstore.similarity_search(question, k=3)
@@ -240,7 +239,7 @@ if uploaded_file and groq_api_key:
 
         st.markdown("---")
 
-         with st.expander("🔍 View retrieved document chunks"):
+        with st.expander("🔍 View retrieved document chunks"):
             for i, doc in enumerate(retrieved_docs):
                 page_num = doc.metadata.get("page", 0) + 1
                 st.markdown(f"**Chunk {i+1}** — 📄 Page {page_num}:")
