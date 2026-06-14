@@ -31,6 +31,7 @@ Upload one or more PDFs and ask questions in plain English. The app finds releva
 
 - **📂 Multi-document upload** — upload several PDFs into one searchable knowledge base
 - **🏷️ Metadata filtering** — restrict search to a specific document via dropdown; the filter is applied before similarity search runs
+- **🤖 Self-query routing** — in Auto mode, an LLM reads the question and decides which document to search, setting the metadata filter automatically
 - **🔄 Query rewriting** — an LLM rewrites vague questions into retrieval-friendly search queries before searching (the final answer still addresses the original question)
 - **📌 Source citations** — every answer shows which document and page it came from
 - **🛡️ Hallucination prevention** — strict grounding prompt; if the answer is not in the documents, the app says so instead of inventing one
