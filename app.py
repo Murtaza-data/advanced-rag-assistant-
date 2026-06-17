@@ -59,7 +59,7 @@ st.sidebar.markdown("""
 - 🔗 Langchain
 - 🗄️ ChromaDB + BM25 / GraphRAG
 - 🤗 HuggingFace Embeddings
-- 🌐 DuckDuckGo (web fallback)
+- 🌐 Tavily (web fallback)
 """)
 
 st.sidebar.markdown("---")
@@ -267,7 +267,7 @@ if uploaded_files and groq_api_key:
 
             # ── BLOCK 4: DECIDE — documents vs web fallback ──
             # If the loop found relevant chunks, answer from documents.
-            # If all attempts failed, search the web instead.
+            # If all attempts failed, search the web with Tavily instead.
             used_web = False
             if "RELEVANT" in grade:
                 answer_prompt = ChatPromptTemplate.from_template("""
@@ -280,15 +280,12 @@ if uploaded_files and groq_api_key:
                     {"context": context, "question": question}).content
             else:
                 used_web = True
-                # Direct DuckDuckGo call (robust to the package rename), never crashes
+                # Tavily web search — key stored in Streamlit Secrets (hidden from users)
                 def web_search(query):
-                    try:
-                        from ddgs import DDGS
-                    except ImportError:
-                        from duckduckgo_search import DDGS
-                    with DDGS() as ddgs:
-                        results = ddgs.text(query, max_results=5)
-                    return "\n".join(r.get("body", "") for r in results)
+                    from tavily import TavilyClient
+                    client = TavilyClient(api_key=st.secrets["TAVILY_API_KEY"])
+                    response = client.search(query, max_results=5)
+                    return "\n".join(r.get("content", "") for r in response.get("results", []))
 
                 try:
                     web_results = web_search(question)
