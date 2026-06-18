@@ -13,8 +13,7 @@ Teams waste hours searching through long PDFs — contracts, policies, manuals, 
 ```mermaid
 flowchart TD
     U[User uploads PDFs + asks question] --> R[Auto-Routing - pick document]
-    R --> QR[Query Rewriting]
-    QR --> V{Retrieval Version}
+    R --> V{Retrieval Version}
     V --> V1[v1 Basic RAG - semantic]
     V --> V2[v2 Hybrid - semantic + BM25]
     V --> V3[v3 GraphRAG - entity graph]
@@ -22,8 +21,9 @@ flowchart TD
     V2 --> G
     V3 --> G
     G -->|relevant| ANS[Answer with citations]
-    G -->|weak, retry| QR
-    G -->|all weak| WEB[Tavily web search fallback]
+    G -->|weak, retries left| QR[Query Rewriting]
+    QR --> V
+    G -->|weak, out of tries| WEB[Tavily web search fallback]
     WEB --> ANS
 ```
 
